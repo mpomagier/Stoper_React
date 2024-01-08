@@ -1,38 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import FormattedTime from './components/FormattedTime/FormattedTime.js';
+import React, { useState } from "react";
+import FormattedTime from "./components/FormattedTime/FormattedTime.js";
 
 function App() {
   const [time, setTime] = useState(0);
-  const [timerId, setTimerId] = useState(null);
+  const [timer, setTimer] = useState(null);
 
   const startTimer = () => {
-    if (!timerId) {
-      const id = setInterval(() => {
-        setTime(prevTime => prevTime + 1);
+    if (!timer) {
+      const newTimer = setInterval(() => {
+        setTime((prevTime) => prevTime + 1);
       }, 1);
-      setTimerId(id);
+      setTimer(newTimer);
     }
   };
 
   const stopTimer = () => {
-    if (timerId) {
-      clearInterval(timerId);
-      setTimerId(null);
-    }
+    clearInterval(timer);
+    setTimer(null);
   };
 
   const resetTimer = () => {
     stopTimer();
     setTime(0);
   };
-
-  useEffect(() => {
-    return () => {
-      if (timerId) {
-        clearInterval(timerId);
-      }
-    };
-  }, [timerId]);
 
   return (
     <div className="App">
